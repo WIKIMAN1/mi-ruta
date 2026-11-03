@@ -703,27 +703,33 @@ body{overflow-x:clip}
 @media(max-width:560px){.install-cta{flex:1 1 100%}}
 @media(prefers-reduced-motion:reduce){.install-head{transition:none}}
 
-/* ===== Modo instalación directa por QR (?install=1): tarjeta grande al inicio ===== */
+/* ===== Modo instalación directa por QR (?install=1): tarjeta limpia y directa ===== */
 .install-qr-card[hidden]{display:none}
-.install-qr-card{scroll-margin-top:96px;margin:22px auto 6px;max-width:760px;text-align:center;background:linear-gradient(165deg,rgba(255,184,28,.16),rgba(255,255,255,.02) 62%),var(--panel);border:2px solid rgba(255,184,28,.75);border-radius:22px;padding:30px 24px 34px;box-shadow:0 24px 52px rgba(0,0,0,.5);position:relative;overflow:hidden;cursor:pointer}
-.install-qr-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:7px;background:#0A1120}
-.install-qr-card::before{content:"";position:absolute;left:0;right:0;bottom:3px;height:2px;background:repeating-linear-gradient(90deg,var(--yellow) 0 16px,transparent 16px 29px);z-index:1;opacity:.9}
-.install-qr-icon{width:76px;height:76px;border-radius:18px;overflow:hidden;margin:0 auto 16px;box-shadow:0 12px 28px rgba(255,184,28,.35);border:1px solid rgba(255,255,255,.25)}
+.install-qr-card{scroll-margin-top:96px;margin:22px auto 0;max-width:560px;text-align:center;background:linear-gradient(165deg,rgba(255,255,255,.05),rgba(255,255,255,.012) 55%),var(--panel);border:1px solid rgba(255,184,28,.45);border-radius:22px;padding:34px 24px 30px;box-shadow:0 24px 52px rgba(0,0,0,.5)}
+.install-qr-icon{width:84px;height:84px;border-radius:20px;overflow:hidden;margin:0 auto 18px;box-shadow:0 12px 28px rgba(255,184,28,.35);border:1px solid rgba(255,255,255,.25)}
 .install-qr-icon img{width:100%;height:100%;display:block}
-.install-qr-card h2{font-size:clamp(1.9rem,6vw,2.6rem);letter-spacing:-.02em;margin:0 0 10px}
-.install-qr-card p{color:var(--muted);font-size:1.02rem;margin:0 auto 20px;max-width:52ch}
-.install-qr-btn{font-size:1.08rem;padding:16px 30px;border-radius:14px;width:100%;max-width:420px}
-.install-qr-btn[hidden],.install-qr-hint[hidden],.install-qr-card p[hidden]{display:none}
-.install-qr-hint{color:#FFE1A1 !important;font-weight:700;font-size:.9rem !important;margin:16px auto 0 !important}
-.install-qr-done{display:flex;gap:9px;align-items:flex-start;justify-content:center;color:#8FF0E9;font-weight:700;font-size:1rem;margin:0 auto;max-width:52ch;text-align:left}
+.install-qr-card h2{font-size:clamp(1.8rem,6vw,2.4rem);letter-spacing:-.02em;margin:0 0 10px}
+.install-qr-card p{color:var(--muted);font-size:1.02rem;margin:0 auto 22px;max-width:38ch}
+.install-qr-btn{font-size:1.1rem;padding:17px 30px;border-radius:14px;width:100%;max-width:420px}
+.install-qr-btn[hidden],.install-qr-card p[hidden]{display:none}
+.install-qr-done{display:flex;gap:9px;align-items:flex-start;justify-content:center;color:#8FF0E9;font-weight:700;font-size:1rem;margin:0 auto;text-align:left}
 .install-qr-done svg{flex:none;margin-top:2px;color:var(--teal)}
 .install-qr-done[hidden]{display:none}
-.install-qr-steps{text-align:left;background:var(--bg2);border:1px dashed rgba(255,184,28,.5);border-radius:12px;padding:14px 16px;margin-top:18px}
+/* Bajo la tarjeta: acciones secundarias discretas, fuera de la tarjeta */
+.install-qr-below[hidden]{display:none}
+.install-qr-below{max-width:560px;margin:18px auto 6px;text-align:center;padding:0 12px}
+.install-chrome-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:999px;text-decoration:none}
+.install-chrome-btn:hover{color:var(--ink);border-color:var(--muted2)}
+.install-help-row{margin-top:6px}
+.install-help-link{background:none;border:0;color:var(--muted2);font-weight:700;font-size:.9rem;padding:8px 10px;text-decoration:underline;text-underline-offset:3px}
+.install-help-link:hover{color:var(--yellow)}
+.install-help-link.attention{color:var(--yellow)}
+.install-qr-steps{margin:12px auto 0;max-width:560px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px 16px;text-align:center}
 .install-qr-steps[hidden]{display:none}
-.install-qr-steps h3{font-size:.95rem;margin:0 0 8px;color:#FFE1A1}
-.install-qr-steps ol{margin:0;padding-left:20px;color:var(--muted);font-size:.92rem}
-.install-qr-steps li{margin-bottom:5px}
-.install-qr-steps li b{color:var(--ink)}
+.install-qr-steps-label{font-size:.85rem;font-weight:800;color:#FFE1A1;margin:0}
+.qr-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;margin-top:11px}
+.qr-flow-step{background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-weight:700;font-size:.88rem;padding:7px 12px;border-radius:999px}
+.qr-flow-arrow{color:var(--yellow);font-weight:800;font-size:.95rem}
 </style>
 </head>
 <body>
@@ -765,12 +771,15 @@ body{overflow-x:clip}
   <section class="install-qr-card" id="installQrCard" hidden aria-labelledby="installQrTitle">
     <div class="install-qr-icon"><img src="data:image/png;base64,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" alt="" width="192" height="192" loading="eager" decoding="async"></div>
     <h2 id="installQrTitle">Instalar Mi Ruta</h2>
-    <p id="installQrTxt">Lleva Mi Ruta en tu celular, como una app: sin Play Store y sin costo. Queda un ícono en tu pantalla de inicio y se abre a pantalla completa.</p>
+    <p id="installQrTxt">Queda un icono en tu pantalla de inicio, sin Play Store y sin costo</p>
     <p class="install-qr-done" id="installQrDone" hidden><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span id="installQrDoneTxt">Ya tienes Mi Ruta instalada: ábrela desde el ícono de tu pantalla de inicio.</span></p>
     <button class="btn btn-y install-qr-btn" id="installQrBtn" type="button"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m6.5 10.5 5.5 5.5 5.5-5.5"/><path d="M4 21h16"/></svg>Instalar Mi Ruta</button>
-    <p class="install-qr-hint" id="installQrHint">Toca esta tarjeta o el botón para instalar.</p>
-    <div class="install-qr-steps" id="installQrSteps" hidden></div>
   </section>
+  <div class="install-qr-below" id="installQrBelow" hidden>
+    <a class="install-chrome-btn" id="installChromeBtn" href="?install=1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Abrir en Chrome</a>
+    <div class="install-help-row"><button class="install-help-link" id="installHelpLink" type="button" aria-expanded="false" aria-controls="installQrSteps">¿No te sale instalar?</button></div>
+    <div class="install-qr-steps" id="installQrSteps" hidden></div>
+  </div>
 
   <!-- ============ INICIO ============ -->
   <section class="view" id="view-inicio">
@@ -2085,10 +2094,10 @@ function setInstalledUI(alreadyText){
   if(alreadyText){ var dt = $('installDoneTxt'); if(dt) dt.textContent = alreadyText; }
   if(done) done.hidden = false;
   if(txt) txt.hidden = true;
-  var qrBtn = $('installQrBtn'), qrDone = $('installQrDone'), qrTxt = $('installQrTxt'), qrSteps = $('installQrSteps'), qrHint = $('installQrHint');
+  var qrBtn = $('installQrBtn'), qrDone = $('installQrDone'), qrTxt = $('installQrTxt'), qrSteps = $('installQrSteps'), qrBelow = $('installQrBelow');
   if(qrBtn) qrBtn.hidden = true;
   if(qrSteps) qrSteps.hidden = true;
-  if(qrHint) qrHint.hidden = true;
+  if(qrBelow) qrBelow.hidden = true;
   if(alreadyText){ var qdt = $('installQrDoneTxt'); if(qdt) qdt.textContent = alreadyText; }
   if(qrDone) qrDone.hidden = false;
   if(qrTxt) qrTxt.hidden = true;
@@ -2114,6 +2123,58 @@ function installStepsHTML(){
     '<li>Elige <b>«Instalar Mi Ruta»</b> o <b>«Añadir a pantalla de inicio»</b>.</li>' +
     '<li>Confirma: Mi Ruta queda con su propio ícono y se abre a pantalla completa.</li></ol>';
 }
+function isSamsungBrowser(){
+  return /samsungbrowser/i.test(navigator.userAgent || '');
+}
+function samsungInstallStepsHTML(){
+  return '<h3>Para instalarla en Samsung Internet</h3><ol>' +
+    '<li>Toca el <b>menú de Samsung Internet</b> (las tres líneas abajo a la derecha).</li>' +
+    '<li>Toca <b>«Añadir página a»</b>.</li>' +
+    '<li>Toca <b>«Pantalla de inicio»</b> (o <b>«Instalar aplicación»</b> si aparece esa opción).</li>' +
+    '<li>Confirma con <b>«Añadir»</b>: Mi Ruta queda con su propio icono y se abre a pantalla completa.</li></ol>';
+}
+function installQrStepsHTML(){
+  function flow(label, steps){
+    var html = '<p class="install-qr-steps-label">' + label + '</p><div class="qr-flow">';
+    for(var i=0;i<steps.length;i++){
+      if(i>0) html += '<span class="qr-flow-arrow" aria-hidden="true">→</span>';
+      html += '<span class="qr-flow-step">' + steps[i] + '</span>';
+    }
+    return html + '</div>';
+  }
+  if(isSamsungBrowser()){
+    return flow('En Samsung Internet', ['Menú','Añadir página a','Pantalla de inicio','Añadir']);
+  }
+  var ua = navigator.userAgent || '';
+  var isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if(isIOS){
+    return flow('En iPhone o iPad', ['Compartir','Añadir a pantalla de inicio','Añadir']);
+  }
+  if(/android/i.test(ua)){
+    return flow('En tu navegador', ['Menú','Instalar app','Instalar']);
+  }
+  return flow('En tu navegador', ['Menú','Instalar Mi Ruta','Instalar']);
+}
+function highlightInstallHelp(){
+  var link = $('installHelpLink');
+  if(!link) return;
+  link.classList.add('attention');
+  if(link.scrollIntoView) link.scrollIntoView({ behavior:'smooth', block:'center' });
+  try { link.focus({ preventScroll:true }); } catch(err) { try { link.focus(); } catch(e2) {} }
+}
+function toggleInstallQrSteps(){
+  var s = $('installQrSteps'), link = $('installHelpLink');
+  if(!s) return;
+  if(s.hidden){
+    s.innerHTML = installQrStepsHTML();
+    s.hidden = false;
+    if(link) link.setAttribute('aria-expanded','true');
+    if(s.scrollIntoView) s.scrollIntoView({ behavior:'smooth', block:'center' });
+  } else {
+    s.hidden = true;
+    if(link) link.setAttribute('aria-expanded','false');
+  }
+}
 function showInstallSteps(scroll){
   var s = $('installSteps');
   if(!s) return;
@@ -2124,8 +2185,10 @@ function showInstallSteps(scroll){
 function showInstallQrSteps(scroll){
   var s = $('installQrSteps');
   if(!s) return;
-  s.innerHTML = installStepsHTML();
+  s.innerHTML = installQrStepsHTML();
   s.hidden = false;
+  var link = $('installHelpLink');
+  if(link) link.setAttribute('aria-expanded','true');
   if(scroll && s.scrollIntoView) s.scrollIntoView({ behavior:'smooth', block:'center' });
 }
 /* Aviso nativo de instalación de Chrome: cuando el navegador está listo
@@ -2177,14 +2240,16 @@ function startInstallFromQr(){
       if(installEvent.userChoice && installEvent.userChoice.then){
         installEvent.userChoice.then(function(choice){
           if(choice && choice.outcome !== 'accepted'){
-            showInstallQrSteps(true);
+            highlightInstallHelp();
           }
         }).catch(function(){});
       }
-    } catch(err) { showInstallQrSteps(true); }
+    } catch(err) { highlightInstallHelp(); }
     return;
   }
-  showInstallQrSteps(true);
+  /* Sin aviso nativo en este navegador no se despliega nada solo:
+     se señala el enlace «¿No te sale instalar?», que es el que abre los pasos. */
+  highlightInstallHelp();
 }
 window.addEventListener('appinstalled', function(){
   runningAsApp = true;
@@ -2195,28 +2260,28 @@ window.addEventListener('appinstalled', function(){
   var head = $('installBtnHead'), cta = $('installBtn');
   if(head) head.addEventListener('click', function(){ startInstall(true); });
   if(cta) cta.addEventListener('click', function(){ startInstall(false); });
-  /* Modo QR (?install=1): mostrar la tarjeta grande al inicio y llevar la vista a ella.
-     El primer toque en cualquier parte de la tarjeta intenta lanzar el prompt
-     nativo si está disponible; el botón siempre lo intenta (o muestra los pasos). */
+  /* Modo QR (?install=1): mostrar la tarjeta limpia al inicio y llevar la vista a ella.
+     La tarjeta solo lleva icono, título, una frase y el botón grande, que intenta
+     primero el aviso nativo del navegador. Los pasos quedan ocultos tras el
+     enlace «¿No te sale instalar?» y nunca se muestran solos al abrir. */
   if(isInstallQrMode){
     var qrCard = $('installQrCard');
     if(qrCard){
       qrCard.hidden = false;
-      var qrFirstTouchDone = false;
-      qrCard.addEventListener('click', function(e){
-        var isBtn = e.target && e.target.closest ? !!e.target.closest('#installQrBtn') : false;
-        var isSteps = e.target && e.target.closest ? !!e.target.closest('#installQrSteps') : false;
-        if(isSteps) return;
-        if(isBtn){
-          qrFirstTouchDone = true;
-          startInstallFromQr();
-          return;
-        }
-        if(!qrFirstTouchDone && deferredInstallPrompt){
-          qrFirstTouchDone = true;
-          startInstallFromQr();
-        }
-      });
+      var qrBelow = $('installQrBelow');
+      if(qrBelow) qrBelow.hidden = false;
+      var qrBtn = $('installQrBtn');
+      if(qrBtn) qrBtn.addEventListener('click', function(){ startInstallFromQr(); });
+      var helpLink = $('installHelpLink');
+      if(helpLink) helpLink.addEventListener('click', function(){ toggleInstallQrSteps(); });
+      var chromeBtn = $('installChromeBtn');
+      if(chromeBtn && /android/i.test(navigator.userAgent || '')){
+        /* Abrir la misma dirección ?install=1 en Chrome: en Android se usa el
+           intent de Chrome; si Chrome no está, vuelve a esta misma página. */
+        var hostPath = window.location.host + window.location.pathname;
+        var target = 'https://' + hostPath + '?install=1';
+        chromeBtn.setAttribute('href', 'intent://' + hostPath + '?install=1#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(target) + ';end');
+      }
       var scrollToQr = function(){
         var el = $('installQrCard');
         if(el && el.scrollIntoView) el.scrollIntoView({ behavior:'auto', block:'start' });
