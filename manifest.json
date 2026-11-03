@@ -1,0 +1,38 @@
+{
+  "background_color": "#05080F",
+  "categories": [
+    "education",
+    "social"
+  ],
+  "description": "Becas, cursos gratis, empleo, emprendimiento, liderazgo y voluntariado, reunidos en un solo lugar y ordenados según lo que necesitas hoy.",
+  "dir": "ltr",
+  "display": "standalone",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "/mi-ruta/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/mi-ruta/icon-512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/mi-ruta/icon-maskable-512.png",
+      "type": "image/png"
+    }
+  ],
+  "id": "/mi-ruta/",
+  "lang": "es",
+  "name": "Mi Ruta — Fundación One Connection",
+  "orientation": "any",
+  "scope": "/mi-ruta/",
+  "short_name": "Mi Ruta",
+  "start_url": "/mi-ruta/",
+  "theme_color": "#05080F"
+}
