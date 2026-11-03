@@ -668,6 +668,14 @@ body{overflow-x:clip}
 }
 @media(prefers-reduced-motion:reduce){.tread-card{transition:none}}
 
+/* ===== Prepárate (Inicio): habilidades básicas, antes de las oportunidades ===== */
+.prep-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.prep-card{display:flex;flex-direction:column}
+.prep-card .btn{margin-top:auto}
+.prep-card .prep-actions{margin-top:14px}
+.prep-map{border:1.5px dashed var(--line);background:transparent;box-shadow:none}
+.prep-map h3{color:var(--muted)}
+
 /* ===== Instalar como app (PWA): botón del encabezado y tarjeta en Inicio ===== */
 .install-head{display:inline-flex;align-items:center;gap:8px;height:42px;border-radius:12px;border:1px solid rgba(255,184,28,.55);background:rgba(255,184,28,.12);color:#FFE1A1;font-weight:800;font-size:.88rem;padding:0 14px;flex:none}
 .install-head:hover{background:rgba(255,184,28,.24);color:#fff}
@@ -856,6 +864,11 @@ body{overflow-x:clip}
           <a class="btn btn-y" href="#/escalera">Subir la escalera</a>
         </div>
       </div>
+    </div>
+
+    <div class="sec" id="preparate">
+      <div class="sec-head"><h2>Prepárate</h2><p>Habilidades básicas primero: estos recursos gratuitos van antes de las oportunidades, porque las oportunidades son para quien está preparado. Cada tarjeta indica su certificado o insignia y si es apto para jóvenes de 15 a 17 años, tal como consta en el mapeo de la Fundación (3 de noviembre de 2026).</p></div>
+      <div class="res-grid" id="preparateGrid"></div>
     </div>
 
     <div class="sec free-today" id="gratuitasHoy">
@@ -1084,14 +1097,15 @@ body{overflow-x:clip}
           <div><label for="fSearch">Buscar</label><input type="search" id="fSearch" placeholder="Ej.: beca, Excel, empleo…" autocomplete="off"></div>
           <div><label for="fArea">Área</label><select id="fArea"></select></div>
           <div><label for="fOffer">Quién la ofrece</label><select id="fOffer"></select></div>
-          <div><label for="fMode">Modalidad</label><select id="fMode"><option value="">Todas</option><option>Presencial</option><option>Virtual</option><option>Mixta</option></select></div>
-          <div><label for="fCost">Costo</label><select id="fCost"><option value="">Todos</option><option value="Gratis">Gratis</option><option value="Con costo">Con costo</option><option value="Crédito">Crédito (se devuelve)</option></select></div>
-          <div><label for="fState">Estado</label><select id="fState"><option value="">Todas (abiertas, por abrir y cerradas 2026)</option><option value="Abierta">Solo abiertas</option><option value="Por abrir">Solo por abrir</option><option value="Cerrada 2026 · vigilar próxima convocatoria">Solo cerradas 2026</option></select></div>
+          <div><label for="fMode">Modalidad</label><select id="fMode"><option value="">Todas</option><option>Presencial</option><option>Virtual</option><option>Mixta</option><option value="Por verificar">Por verificar</option></select></div>
+          <div><label for="fCost">Costo</label><select id="fCost"><option value="">Todos</option><option value="Gratis">Gratis</option><option value="Con costo">Con costo</option><option value="Crédito">Crédito (se devuelve)</option><option value="Por verificar">Por verificar</option></select></div>
+          <div><label for="fState">Estado</label><select id="fState"><option value="">Todas (abiertas, por abrir y cerradas 2026)</option><option value="Abierta">Solo abiertas</option><option value="Por abrir">Solo por abrir</option><option value="Convocatoria periódica">Convocatoria periódica</option><option value="Permanente">Permanente</option><option value="Por verificar">Por verificar</option><option value="Cerrada 2026 · vigilar próxima convocatoria">Solo cerradas 2026</option></select></div>
           <div><label for="fStep">Escalón</label><select id="fStep"><option value="">Todos</option><option value="1">1 · Cursos y oficios</option><option value="2">2 · Becas y empleo en Ecuador</option><option value="3">3 · Emprender</option><option value="4">4 · Internacional</option></select></div>
         </div>
         <div class="toggles">
           <button type="button" class="tgl" id="tglMinor" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Solo aptas para menores de 18</button>
           <button type="button" class="tgl" id="tglFree" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Solo gratis</button>
+          <button type="button" class="tgl" id="tglVerify" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Por verificar</button>
           <button type="button" class="tgl" id="tglSaved" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Solo mi lista</button>
         </div>
       </form>
@@ -1292,7 +1306,7 @@ var AREAS = [
    subs:['Conócete y proyecto de vida','Emociones y bienestar','Dónde pedir ayuda'], module:'Módulo 1 · ¿Quién soy? ¿Quiénes somos?'},
   {id:'formacion', img:'img-formacion.jpg', imgAlt:'Ilustración de una joven graduada con birrete, libros y su diploma', name:'Formación y becas', short:'Estudiar y aprender', color:'var(--blue)', hex:'#4A90D9', icon:'grad',
    who:'Para quien quiere estudiar, terminar sus estudios o aprender algo nuevo.',
-   subs:['Becas de estudio','Termina o retoma tus estudios','Cursos y certificaciones gratuitas','Idiomas','Oficios técnicos','Comunidades de formación en tecnología'], module:'Se conecta con todos los módulos'},
+   subs:['Becas de estudio','Becas parciales','Termina o retoma tus estudios','Cursos y certificaciones gratuitas','Idiomas','Oficios técnicos','Comunidades de formación en tecnología','Mujeres en tecnología (STEM)'], module:'Se conecta con todos los módulos'},
   {id:'empleabilidad', img:'img-empleabilidad.jpg', imgAlt:'Ilustración de dos personas dándose la mano en una oficina, como un primer empleo', name:'Empleabilidad', short:'Primer empleo y empleo mejor', color:'var(--yellow)', hex:'#FFB81C', icon:'brief',
    who:'Para quien busca su primer empleo o uno mejor.',
    subs:['Vacantes y primer empleo','Pasantías y programas trainee','Programas públicos de empleo juvenil','Ferias laborales','Prepárate para el empleo'], module:'Módulo 2 · Listos para el empleo'},
@@ -1398,7 +1412,7 @@ var OPPS = [
   {id:22, title:'Conecta Empleo en la Comunidad Andina — 19 programas gratuitos en línea', org:'Fundación Telefónica Movistar', orgName:'Fundación Telefónica Movistar con la Comunidad Andina', areas:['formacion','empleabilidad'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · Fundación Telefónica Movistar',
    url:'https://www.comunidadandina.org',
    offers:'19 programas gratuitos en línea de Fundación Telefónica Movistar con la Comunidad Andina, para ciudadanos de Ecuador, Perú, Bolivia y Colombia que buscan empleo: emprendimiento social, gestión de proyectos, gestión por smartphone, negociación, habilidades para el empleo, finanzas personales para emprendedores, networking, diseño de CV de alto impacto, guía para entrevistas, ciberseguridad y contenidos digitales. Certificado según la ficha de cada curso. Completar un programa no garantiza un empleo.',
-   req:'Para ciudadanos de Ecuador, Perú, Bolivia y Colombia que buscan empleo · Edad por verificar en el portal oficial antes de inscribirte: esta ficha no afirma una edad · Programas en línea y gratuitos · Certificado según la ficha de cada curso, no es universal: revísalo en el portal oficial antes de inscribirte', ageMin:null, ageMax:null, ageNote:'Por verificar en el portal', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, certDetail:'Certificado según la ficha de cada curso: consúltalo en el portal oficial antes de inscribirte.', close:null, state:'Abierta', step:1, scope:'Comunidad Andina'},
+   req:'Para ciudadanos de Ecuador, Perú, Bolivia y Colombia que buscan empleo · Edad por verificar en el portal oficial antes de inscribirte: esta ficha no afirma una edad · Programas en línea y gratuitos · Certificado según la ficha de cada curso, no es universal: revísalo en el portal oficial antes de inscribirte', ageMin:null, ageMax:null, ageNote:'Por verificar en el portal', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, certDetail:'Certificado según la ficha de cada curso: consúltalo en el portal oficial antes de inscribirte. Enlace actual no lleva directo a los cursos; disponibilidad actual por verificar (programa lanzado en 2023).', close:null, state:'Abierta', step:1, scope:'Comunidad Andina'},
   {id:23, title:'IBM SkillsBuild — cursos cortos gratuitos con credenciales digitales', org:'IBM', orgName:'IBM · IBM SkillsBuild', areas:['formacion','empleabilidad'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · IBM SkillsBuild',
    url:'https://skillsbuild.org/sign-up',
    offers:'Cursos cortos gratuitos en línea y autoguiados, en español, en inteligencia artificial, ciberseguridad, datos, nube y habilidades profesionales, con credenciales digitales 100% gratuitas al completar cada curso. Son credenciales digitales de aprendizaje que acreditan lo aprendido: no son un título universitario ni técnico y no garantizan un empleo.',
@@ -1474,7 +1488,140 @@ var OPPS = [
   {id:41, title:'MAGP SEAL — más de 70 cursos virtuales gratuitos agroproductivos con certificado', org:'Gobierno nacional', orgName:'Ministerio de Agricultura, Ganadería y Pesca (MAGP) · Plataforma SEAL', areas:['formacion','emprendimiento'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · MAGP · SEAL',
    url:'https://capacitacion.agricultura.gob.ec',
    offers:'Más de 70 cursos virtuales gratuitos agroproductivos en la plataforma SEAL del Ministerio de Agricultura, Ganadería y Pesca del Ecuador: producción agrícola y pecuaria, riego, asociatividad y más. Al completar las actividades y aprobar las evaluaciones obtienes un certificado digital avalado por el MAGP. Verifica la oferta actual de cursos en el portal antes de inscribirte. El certificado acredita tu aprendizaje: no es un título universitario ni técnico y no garantiza un empleo ni ingresos.',
-   req:'Edad por verificar en el portal oficial antes de inscribirte: esta ficha no afirma una edad y no está marcada como apta para menores de 18 · Cursos virtuales gratuitos agroproductivos · Certificado digital avalado por el MAGP al completar actividades y aprobar evaluaciones · Verifica la oferta actual de cursos en el portal oficial antes de inscribirte', ageMin:null, ageMax:null, ageNote:'Por verificar en el portal', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:true, certDetail:'Sí: certificado digital avalado por el MAGP al completar las actividades y aprobar las evaluaciones de cada curso. Verifica la oferta actual en el portal. No es un título universitario ni técnico.', close:null, state:'Abierta', step:1, scope:'Ecuador'}
+   req:'Edad por verificar en el portal oficial antes de inscribirte: esta ficha no afirma una edad y no está marcada como apta para menores de 18 · Cursos virtuales gratuitos agroproductivos · Certificado digital avalado por el MAGP al completar actividades y aprobar evaluaciones · Verifica la oferta actual de cursos en el portal oficial antes de inscribirte', ageMin:null, ageMax:null, ageNote:'Por verificar en el portal', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:true, certDetail:'Sí: certificado digital avalado por el MAGP al completar las actividades y aprobar las evaluaciones de cada curso. Verifica la oferta actual en el portal. No es un título universitario ni técnico.', close:null, state:'Abierta', step:1, scope:'Ecuador'},
+  {id:42, title:'Becas Erasmus Mundus — maestrías conjuntas en Europa', org:'Cooperación internacional', orgName:'Delegación de la Unión Europea en Ecuador', areas:['formacion'], sub:'Becas de estudio', real:true, officialLabel:'Beca · Delegación UE en Ecuador',
+   url:'https://www.eacea.ec.europa.eu/scholarships/erasmus-mundus-catalogue_en',
+   offers:'Becas completas para maestrías conjuntas en universidades europeas (Erasmus Mundus): un mismo programa de maestría cursado en varias universidades de Europa. La convocatoria es periódica: abre cada año, revisa la convocatoria vigente y activa tu alerta.',
+   req:'Edad por verificar en el portal oficial · Costo y cobertura exactos por verificar en cada convocatoria: esta ficha no afirma montos ni fechas de cierre · Postula solo por los canales oficiales del programa', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Por verificar', cost:'Por verificar', cert:false, certDetail:'Al terminar obtienes un título de máster conjunto, no un certificado de curso: es una beca de maestría (Erasmus Mundus). Confirma la cobertura en las bases de cada convocatoria.', close:null, state:'Convocatoria periódica', step:4, scope:'Internacional'},
+  {id:43, title:'Becas Mujer 2026 — 50 % de descuento en maestrías en línea (no es beca completa)', org:'Universidad Europea', orgName:'Universidad Europea y Ministerio de Gobierno', areas:['formacion'], sub:'Becas parciales', real:true, officialLabel:'Descuento 50% · Universidad Europea',
+   url:'https://ecuador.universidadeuropea.com/becas-para-mujeres/',
+   offers:'Para mujeres: 50 % de descuento en maestrías oficiales en línea. Ojo, con claridad: es un descuento del 50 %, NO una beca completa; la otra mitad se paga. La convocatoria 2026 está cerrada: esta ficha queda al final para vigilar la próxima convocatoria, no como una oferta abierta.',
+   req:'Dirigida a mujeres · Edad por verificar en el portal oficial · Confirma el valor final con el descuento, las cuotas y las condiciones en el portal oficial antes de matricularte', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Con costo', cert:false, certDetail:'Al completar y pagar la maestría obtienes su título oficial: no es un certificado gratuito.', close:null, state:'Cerrada 2026 · vigilar próxima convocatoria', step:4, scope:'Internacional'},
+  {id:44, title:'Becas TIC — beca única de USD 825,17 para carreras TIC', org:'Gobierno nacional', orgName:'MINEDEC vía SENESCYT · Becas TIC', areas:['formacion'], sub:'Becas de estudio', real:true, officialLabel:'Beca · MINEDEC vía SENESCYT',
+   url:'https://pusak.fomentoacademico.gob.ec',
+   offers:'Beca única de manutención de USD 825,17 para estudiantes de carreras técnicas y tecnológicas en TIC: infraestructura tecnológica, mantenimiento de software, desarrollo web y bases de datos. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Edad por verificar en el portal oficial · Ser estudiante de una carrera técnica o tecnológica en TIC, según las bases de cada convocatoria · Postula solo por el portal oficial Pusak', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Convocatoria periódica', step:2, scope:'Ecuador'},
+  {id:45, title:'Becas municipales para carreras técnicas y universitarias — DASE EP', org:'Municipio de Guayaquil', orgName:'Municipio de Guayaquil · DASE EP', areas:['formacion'], sub:'Becas de estudio', real:true, officialLabel:'Beca · DASE EP Guayaquil',
+   url:'https://dase.gob.ec',
+   offers:'Becas municipales en 29 carreras técnicas, tecnológicas y universitarias (15 híbridas y 14 presenciales): Desarrollo de Software, Diseño Gráfico, Contabilidad, Enfermería, Electricidad, Gastronomía, Mecatrónica, entre otras. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Hasta los 50 años · Edad mínima y demás requisitos por verificar en la convocatoria vigente de DASE EP · Postula solo por los canales oficiales de DASE', ageMin:null, ageMax:50, ageNote:'Hasta los 50 años · mínima por verificar', ageVerify:true, minor:false, mode:'Mixta', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Convocatoria periódica', step:2, scope:'Ecuador'},
+  {id:46, title:'United World Colleges (UWC) — bachillerato internacional', org:'United World Colleges', orgName:'United World Colleges (UWC) · Comité UWC Ecuador', areas:['formacion'], sub:'Becas parciales', real:true, officialLabel:'Beca · UWC Ecuador',
+   url:'https://ec.uwc.org',
+   offers:'Bachillerato internacional en colegios UWC, con estudiantes de muchos países. La edad, el costo o beca y las fechas de postulación quedan por verificar en el portal oficial del comité de Ecuador.',
+   req:'Edad por verificar en el portal oficial · Costo o beca por verificar en el portal oficial · Si eres menor de edad, todo el proceso se hace con conocimiento de tu representante', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Por verificar', cost:'Por verificar', cert:false, certDetail:'Programa IBDP/IBCP con beca parcial o total para más del 80% según la home; edad, costo y criterios del comité de Ecuador por verificar.', close:null, state:'Cerrada actualmente · registro de interés en la página oficial', step:4, scope:'Internacional'},
+  {id:47, title:'Becas en programación e inteligencia artificial — Fundación Cincinnatus (100 % gratis)', org:'Fundación Cincinnatus', orgName:'Fundación Cincinnatus', areas:['formacion'], sub:'Comunidades de formación en tecnología', real:true, officialLabel:'Gratis · Fundación Cincinnatus',
+   url:'https://cincinnatus.edu.do',
+   offers:'Formación tecnológica gratuita con becas del 100 %: pensamiento crítico con nivelación en matemáticas, inteligencia artificial y programación aplicada, con mini proyecto con empresas. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Edad por verificar en el portal oficial · Formación 100 % gratuita para las personas seleccionadas · Revisa la convocatoria vigente y sus requisitos en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:false, certDetail:'Por verificar en el portal oficial.', close:null, state:'Convocatoria periódica', step:1, scope:'Internacional'},
+  {id:48, title:'AWS Skill Builder — cursos gratuitos de nube e IA con insignias', org:'Amazon Web Services', orgName:'Amazon Web Services · AWS Skill Builder', areas:['formacion'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · AWS Skill Builder',
+   url:'https://skillbuilder.aws',
+   offers:'Cursos gratuitos de computación en la nube e inteligencia artificial, con insignias al completar cursos y rutas. Ojo: esas insignias no son la certificación profesional de AWS, cuyo examen se paga.',
+   req:'Edad por verificar en el portal oficial · Cursos gratuitos en línea: crea tu cuenta en el portal oficial · La certificación profesional de AWS es de pago y no se presenta aquí como gratuita', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Por verificar', cost:'Gratis', cert:true, certDetail:'Insignias digitales gratuitas al completar cursos y rutas de Skill Builder. La certificación profesional de AWS exige un examen de pago: no es gratuita.', close:null, state:'Por verificar', step:1, scope:'Internacional'},
+  {id:49, title:'Claude 101 — curso gratuito de uso de IA (Anthropic Academy)', org:'Anthropic', orgName:'Anthropic · Anthropic Academy', areas:['formacion'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · Anthropic Academy',
+   url:'https://anthropic.skilljar.com/claude-101',
+   offers:'Curso gratuito de uso de la inteligencia artificial con proyectos prácticos, sin requisitos técnicos, de Anthropic Academy.',
+   req:'Edad por verificar en el portal oficial · Idioma por verificar en el portal oficial antes de inscribirte · Curso gratuito en línea, sin requisitos técnicos', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Por verificar', cost:'Gratis', cert:true, certDetail:'Certificado de finalización vía Skilljar (según FAQ de Anthropic Academy); costo e idioma por verificar en el portal del curso.', close:null, state:'Por verificar', step:1, scope:'Internacional'},
+  {id:50, title:'Edutin Academy — cursos gratuitos, certificado de pago', org:'Edutin Academy', orgName:'Edutin Academy', areas:['formacion'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Cursos gratis · certificado de pago · Edutin',
+   url:'https://edutin.com',
+   offers:'Cursos gratuitos de Illustrator, Premiere Pro, edición de video y diseño de logos, sin experiencia previa. Ojo: los cursos son gratis, pero el certificado SE PAGA. Por eso esta ficha lleva costo «Con costo» y no forma parte de la sección «Gratuitas para empezar hoy».',
+   req:'Edad por verificar en el portal oficial · Sin experiencia previa · El certificado se paga: confirma su precio en el portal oficial antes de decidir', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Por verificar', cost:'Con costo', cert:false, certDetail:'Curso gratis; certificado oficial validado de pago: 50 USD de referencia internacional, con descuento por país y en los primeros 7 días; el precio exacto se muestra al pulsar “Estudiar con certificado”.', close:null, state:'Por verificar', step:1, scope:'Internacional'},
+  {id:51, title:'Google AI Essentials — curso de IA de Google vía Coursera (con costo)', org:'Google', orgName:'Google · vía Coursera', areas:['formacion'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Con costo · Google vía Coursera',
+   url:'https://coursera.org/learn/google-ai-essentials',
+   offers:'Curso de Google vía Coursera, de unas 10 horas y en español, sobre cómo usar la inteligencia artificial, con certificado de Google e insignia Credly. Es un curso con costo: no forma parte de la sección «Gratuitas para empezar hoy».',
+   req:'Edad por verificar en el portal oficial · Curso con costo vía Coursera: confirma el precio vigente en la página del curso antes de inscribirte', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Con costo', cert:true, certDetail:'Certificado de Google e insignia Credly al completar el curso en Coursera (curso con costo).', close:null, state:'Por verificar', step:1, scope:'Internacional'},
+  {id:52, title:'OpenAI Academy — cursos gratuitos de IA', org:'OpenAI', orgName:'OpenAI · OpenAI Academy', areas:['formacion'], sub:'Cursos y certificaciones gratuitas', real:true, officialLabel:'Gratis · OpenAI Academy',
+   url:'https://help.openai.com/es-419/articles/20001270-cursos-de-openai-academy',
+   offers:'Cursos gratuitos de OpenAI Academy: AI Foundations, Applied AI Foundations y Agents and Workflows, para aprender a usar la IA y aplicarla en el trabajo.',
+   req:'Edad por verificar en el portal oficial · Idioma y certificado por verificar en el portal oficial antes de inscribirte · Cursos gratuitos en línea', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Por verificar', cost:'Gratis', cert:false, certDetail:'Insignia por curso al aprobar con 80% o más; certificado de finalización solo al completar una ruta elegible; no es una certificación profesional.', close:null, state:'Por verificar', step:1, scope:'Internacional'},
+  {id:53, title:'Mujer Digital Ecuador — becas de certificación para mujeres de 18 a 25 años', org:'Mujer Digital Ecuador', orgName:'Mujer Digital Ecuador', areas:['formacion'], sub:'Mujeres en tecnología (STEM)', real:true, officialLabel:'Gratis · Mujer Digital Ecuador',
+   url:'https://mujerdigitalec.org',
+   offers:'Solo para mujeres de 18 a 25 años: becas de un año para certificaciones de alta empleabilidad —programación full stack, análisis de datos y diseño UX— con habilidades blandas, pasantías y conexión con empleo. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Solo para mujeres de 18 a 25 años · Becas gratuitas para las seleccionadas · Revisa la convocatoria vigente, sus requisitos y fechas en el portal oficial', ageMin:18, ageMax:25, minor:false, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:true, certDetail:'Certificaciones de alta empleabilidad (full stack, datos, UX) para las becarias, según la convocatoria vigente: confirma el detalle en el portal oficial. Convocatoria vigente por confirmar: la página obtenida muestra cohortes 2024.', close:null, state:'Convocatoria periódica', step:2, scope:'Ecuador'},
+  {id:54, title:'Mujer Digital Ecuador — cursos gratuitos para mujeres', org:'Mujer Digital Ecuador', orgName:'Mujer Digital Ecuador · Centro de Innovación, con Fundación Favorita, Platzi, CITEC, ÉPICO, CONQUITO y Red Mujer STEAM', areas:['formacion'], sub:'Mujeres en tecnología (STEM)', real:true, officialLabel:'Gratis · Mujer Digital Ecuador',
+   url:'https://mujerdigitalec.org/inscripciones',
+   offers:'Para mujeres: cursos cortos gratuitos en línea —Programación Básica (30 h), Marca Personal (12 h) e Inglés técnico (12 h)—. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Dirigido a mujeres · Edad por verificar en el portal oficial · Cursos gratuitos en línea: inscríbete en la página oficial de inscripciones', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, certDetail:'Cursos cortos: certificado no mencionado en la página de inscripciones. Becas de un año: certificación prevista en carreras técnicas, según esa misma página.', close:null, state:'Convocatoria periódica', step:1, scope:'Ecuador'},
+  {id:55, title:'Fundación Proyecto Salesiano Guayaquil — formación técnica para jóvenes vulnerables', org:'Fundación Proyecto Salesiano', orgName:'Fundación Proyecto Salesiano Guayaquil', areas:['formacion'], sub:'Oficios técnicos', real:true, officialLabel:'Formación · Proyecto Salesiano Guayaquil',
+   url:'https://www.salesianos.org.ec/2024/11/27/23-jovenes-del-proyecto-salesiano-guayaquil-se-certifican-en-reparacion-de-celulares-y-barber-shop-impulsando-un-cambio-sus-vidas/',
+   offers:'Formación técnica para jóvenes de sectores vulnerables de Guayaquil (grupo priorizado): barbería, reparación de celulares, entre otros oficios, y formación de líderes adolescentes.',
+   req:'Dirigida a jóvenes de sectores vulnerables (grupo priorizado) · Edad, costo y cupos por verificar en el portal oficial · Si eres menor de edad, el registro se hace con conocimiento de tu representante', ageMin:null, ageMax:null, ageNote:'Jóvenes vulnerables · edad por verificar', ageVerify:true, minor:true, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, certDetail:'Certificado de graduación confirmado en noticias de Salesianos; convocatoria actual por verificar.', close:null, state:'Por verificar', step:1, scope:'Ecuador'},
+  {id:56, title:'Preparación para el ingreso a la universidad pública — DASE (16 a 25 años)', org:'Municipio de Guayaquil', orgName:'Municipio de Guayaquil · DASE EP', areas:['formacion'], sub:'Termina o retoma tus estudios', real:true, officialLabel:'Gratis · DASE EP Guayaquil',
+   url:'https://dase.gob.ec',
+   offers:'Refuerzo gratuito para el examen de admisión a la universidad pública en 6 áreas, con certificaciones de inglés A1 y Excel, para jóvenes de 16 a 25 años. La convocatoria es periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'De 16 a 25 años · Gratis · Si tienes 16 o 17 años, el registro se hace con conocimiento de tu representante · Revisa la convocatoria vigente en DASE EP', ageMin:16, ageMax:25, minor:true, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:true, certDetail:'Incluye certificaciones de inglés A1 y Excel, según la convocatoria vigente de DASE EP.', close:null, state:'Convocatoria periódica', step:2, scope:'Ecuador'},
+  {id:57, title:'Camella ÉPICO — feria de empleo en Guayaquil (18 a 35 años)', org:'ÉPICO · Municipio de Guayaquil', orgName:'ÉPICO · Empresa Pública Municipal de Guayaquil', areas:['empleabilidad'], sub:'Ferias laborales', real:true, officialLabel:'Gratis · ÉPICO Guayaquil',
+   url:'https://guayaquil.gob.ec/capacitacion-empleo-innovacion-apuesta-epico-potenciar-talento-local/',
+   offers:'Feria de empleo de ÉPICO con reclutamiento en sitio, charlas de empleabilidad, asesoría de hoja de vida y simulación de entrevistas, para personas de 18 a 35 años. Se realiza por convocatoria periódica: revisa la próxima fecha y activa tu alerta.',
+   req:'De 18 a 35 años · Gratis · Feria presencial en Guayaquil: confirma fecha, lugar y registro de la próxima edición en el portal oficial', ageMin:18, ageMax:35, minor:false, mode:'Presencial', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Convocatoria periódica', step:2, scope:'Ecuador'},
+  {id:58, title:'LinkedIn — vacantes junior y trainee', org:'LinkedIn', orgName:'LinkedIn · portal de empleo', areas:['empleabilidad'], sub:'Pasantías y programas trainee', real:true, officialLabel:'Gratis · LinkedIn',
+   url:'https://linkedin.com/jobs',
+   offers:'Portal de vacantes junior y trainee, con contacto directo con reclutadores. Es gratis y permanente: para postular necesitas crear tu cuenta en LinkedIn.',
+   req:'Edad por verificar en el portal oficial · Requiere crear una cuenta gratuita en LinkedIn · Postula solo a ofertas de empresas identificables: nadie serio cobra por postular', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Permanente', step:2, scope:'Internacional'},
+  {id:59, title:'Computrabajo — portal de empleo en Ecuador', org:'Computrabajo', orgName:'Computrabajo · portal de empleo', areas:['empleabilidad'], sub:'Vacantes y primer empleo', real:true, officialLabel:'Gratis · Computrabajo',
+   url:'https://ec.computrabajo.com',
+   offers:'Portal de empleo con vacantes diarias en Ecuador: operativas, comerciales y técnicas. Gratis y permanente.',
+   req:'Edad por verificar en el portal oficial · Registro y postulación gratuitos · Nadie serio cobra por postular a una vacante', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Permanente', step:2, scope:'Ecuador'},
+  {id:60, title:'Multitrabajos — portal de empleo', org:'Multitrabajos', orgName:'Multitrabajos · portal de empleo', areas:['empleabilidad'], sub:'Vacantes y primer empleo', real:true, officialLabel:'Gratis · Multitrabajos',
+   url:'https://multitrabajos.com',
+   offers:'Portal de empleo de empresas medianas y multinacionales; también organiza ferias virtuales de empleo. Gratis y permanente.',
+   req:'Edad por verificar en el portal oficial · Registro y postulación gratuitos · Nadie serio cobra por postular a una vacante', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Permanente', step:2, scope:'Ecuador'},
+  {id:61, title:'Crédito Emprende Violeta — BanEcuador (es un préstamo: el dinero se devuelve)', org:'BanEcuador', orgName:'BanEcuador B.P.', areas:['emprendimiento'], sub:'Créditos para emprender', real:true, officialLabel:'Crédito · BanEcuador',
+   url:'https://banecuador.fin.ec/creditopersonas/consumo/creditoemprendevioleta/',
+   offers:'Para mujeres emprendedoras de 25 a 60 años: créditos de USD 500 a 5.000 al 9,8 %, hasta 5 años de plazo y sin garante. Es un préstamo: el dinero se devuelve, con intereses.',
+   req:'Solo para mujeres de 25 a 60 años · Sin garante · La aprobación no es automática: BanEcuador evalúa cada solicitud · Es un préstamo: el dinero se devuelve con intereses; lee bien el monto, la tasa y el plazo antes de firmar', ageMin:25, ageMax:60, minor:false, mode:'Por verificar', lang:'Español', cost:'Crédito', cert:false, close:null, state:'Por verificar', step:3, scope:'Ecuador'},
+  {id:62, title:'Camino Violeta — registro gratuito de mujeres emprendedoras', org:'Gobierno nacional', orgName:'Ministerio de Producción, Comercio Exterior e Inversiones, con BanEcuador', areas:['emprendimiento'], sub:'Formaliza tu negocio', real:true, officialLabel:'Gratis · Camino Violeta',
+   url:'https://servicios.produccion.gob.ec/site_rum/rum.html',
+   offers:'Registro gratuito para mujeres emprendedoras no formalizadas: acceso a capacitaciones técnicas y empresariales, cursos de exportación, incentivos tributarios y créditos Violeta.',
+   req:'Dirigido a mujeres emprendedoras · Registro gratuito · Edad por verificar en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Abierta', step:3, scope:'Ecuador'},
+  {id:63, title:'Ruta Épica — incubación y acompañamiento de ÉPICO', org:'ÉPICO · Municipio de Guayaquil', orgName:'ÉPICO · Empresa Pública Municipal de Guayaquil', areas:['emprendimiento'], sub:'Incubación y acompañamiento', real:true, officialLabel:'Gratis · ÉPICO Guayaquil',
+   url:'https://guayaquil.gob.ec/epico-inicia-programa-incubacion-beneficio-emprendedores/',
+   offers:'Capacitación, acompañamiento técnico y acceso a ferias para emprendedores en formalización o crecimiento: ventas, marketing digital, empaques y marca. Convocatoria periódica: abre cada año, revisa la vigente y activa tu alerta.',
+   req:'Edad por verificar en el portal oficial · Gratis · Revisa la convocatoria vigente de ÉPICO en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Convocatoria periódica', step:3, scope:'Ecuador'},
+  {id:64, title:'Academia para Mujeres Emprendedoras (AWE) — Embajada de EE. UU.', org:'Embajada de EE. UU.', orgName:'Embajada de EE. UU. en Ecuador · Academia para Mujeres Emprendedoras (AWE)', areas:['emprendimiento'], sub:'Prepárate para emprender', real:true, officialLabel:'Mujeres · Embajada de EE. UU.',
+   url:'https://unae.edu.ec/oferta/proyecto-academy-for-women-entrepreneurs/',
+   offers:'Formación para mujeres emprendedoras del programa Academy for Women Entrepreneurs (AWE), de la Embajada de Estados Unidos en Ecuador.',
+   req:'Dirigido a mujeres emprendedoras · Edad y costo por verificar en el portal oficial · Revisa la convocatoria vigente antes de postular', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:3, scope:'Ecuador'},
+  {id:65, title:'Emprende EC — talleres en línea del Ministerio del Trabajo', org:'Gobierno nacional', orgName:'Ministerio del Trabajo · Emprende EC', areas:['emprendimiento'], sub:'Prepárate para emprender', real:true, officialLabel:'Gratis · Ministerio del Trabajo',
+   url:'https://gob.ec/mt/tramites/inscripcion-talleres-facilitar-insercion-al-mercado-laboral-traves-plataforma-elearning',
+   offers:'Talleres en línea gratuitos del Ministerio del Trabajo para facilitar la inserción en el mercado laboral y el emprendimiento.',
+   req:'Edad por verificar en el portal oficial · Talleres gratuitos en línea: inscríbete por el trámite oficial en gob.ec', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Español', cost:'Gratis', cert:false, close:null, state:'Por verificar', step:3, scope:'Ecuador'},
+  {id:66, title:'Meta Blueprint — cursos gratuitos de publicidad (el examen de certificación se paga)', org:'Meta', orgName:'Meta · Meta Blueprint', areas:['emprendimiento'], sub:'Prepárate para emprender', real:true, officialLabel:'Cursos gratis · Meta Blueprint',
+   url:'https://facebook.com/business/learn',
+   offers:'Cursos gratuitos de Meta sobre publicidad en Facebook, Instagram y WhatsApp para tu negocio. Ojo: los cursos son gratis, pero el examen de certificación SE PAGA. Por eso esta ficha no se presenta como certificado gratis ni forma parte de «Gratuitas para empezar hoy».',
+   req:'Edad por verificar en el portal oficial · Cursos gratuitos en línea · El examen de certificación se paga: confirma su precio en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Virtual', lang:'Por verificar', cost:'Gratis', cert:false, certDetail:'Los cursos son gratuitos; el examen de certificación de Meta se paga. No es un certificado gratuito.', close:null, state:'Por verificar', step:3, scope:'Internacional'},
+  {id:67, title:'Red Economía Violeta — capacitaciones para mujeres emprendedoras', org:'Gobierno nacional', orgName:'Ministerio de la Mujer y Derechos Humanos · Red Economía Violeta', areas:['emprendimiento'], sub:'Prepárate para emprender', real:true, officialLabel:'Mujeres · Red Economía Violeta',
+   url:'https://derechoshumanos.gob.ec/red-economia-violeta/',
+   offers:'Capacitaciones para mujeres emprendedoras de la Red Economía Violeta, del Ministerio de la Mujer y Derechos Humanos.',
+   req:'Dirigido a mujeres emprendedoras · Edad y costo por verificar en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:3, scope:'Ecuador'},
+  {id:68, title:'Ser Impulso Mujer — capacitación, red y crédito para emprendedoras (Banco Pichincha)', org:'Banco Pichincha', orgName:'Banco Pichincha · Ser Impulso Mujer', areas:['emprendimiento'], sub:'Prepárate para emprender', real:true, officialLabel:'Mujeres · Banco Pichincha',
+   url:'https://pichincha.com/programa/ser',
+   offers:'Programa de Banco Pichincha para mujeres emprendedoras: capacitación, red de contactos y crédito mujer.',
+   req:'Dirigido a mujeres emprendedoras · Edad y costo por verificar en el portal oficial · Si tomas el crédito mujer, recuerda: es un préstamo y el dinero se devuelve con intereses', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:3, scope:'Ecuador'},
+  {id:69, title:'Líderes Juveniles LiderLAC — Corporación Líderes para Gobernar', org:'Corporación Líderes para Gobernar', orgName:'Corporación Líderes para Gobernar · Líderes Juveniles (LiderLAC)', areas:['liderazgo'], sub:'Formación en liderazgo', real:true, officialLabel:'Liderazgo · LiderLAC',
+   url:'https://lideresparagobernar.org/index.php/lider/',
+   offers:'Formación en liderazgo juvenil de la Corporación Líderes para Gobernar (programa Líderes Juveniles de LiderLAC).',
+   req:'Edad y costo por verificar en el portal oficial · Revisa la convocatoria vigente antes de postular', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:2, scope:'Ecuador'},
+  {id:70, title:'Radar de Innovación Socioambiental LATAM — makesense americas', org:'makesense americas', orgName:'makesense americas · Radar de Innovación Socioambiental LATAM', areas:['liderazgo'], sub:'Iniciativas comunitarias', real:true, officialLabel:'Comunidad · makesense americas',
+   url:'https://americas.makesense.org',
+   offers:'Encuentros de comunidad y red latinoamericana para resolver desafíos sociales y ambientales, de makesense americas.',
+   req:'Edad y costo por verificar en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:4, scope:'Internacional'},
+  {id:71, title:'Global Shapers — Guayaquil Hub (Foro Económico Mundial)', org:'Foro Económico Mundial', orgName:'Foro Económico Mundial · Global Shapers Community, Guayaquil Hub', areas:['liderazgo'], sub:'Redes juveniles', real:true, officialLabel:'Red juvenil · Global Shapers',
+   url:'https://initiatives.weforum.org/guayaquil-hub/',
+   offers:'Red de jóvenes líderes del Foro Económico Mundial: el hub de Guayaquil impulsa proyectos de impacto en la ciudad.',
+   req:'Edad y costo por verificar en el portal oficial · La incorporación a la red sigue el proceso de cada hub: revísalo en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Por verificar', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:4, scope:'Ecuador'},
+  {id:72, title:'JCI Ecuador / JCI Guayaquil — red de jóvenes líderes', org:'JCI', orgName:'Junior Chamber International · JCI Ecuador / JCI Guayaquil', areas:['liderazgo'], sub:'Redes juveniles', real:true, officialLabel:'Red juvenil · JCI',
+   url:'https://jciecuador.com',
+   offers:'Red de jóvenes líderes y emprendedores de Junior Chamber International, con presencia en Ecuador y en Guayaquil.',
+   req:'Edad y costo por verificar en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:4, scope:'Ecuador'},
+  {id:73, title:'Rotaract — clubes de servicio y liderazgo de Rotary', org:'Rotary', orgName:'Rotary · Rotaract', areas:['liderazgo'], sub:'Redes juveniles', real:true, officialLabel:'Red juvenil · Rotary',
+   url:'https://rotary.org/es/get-involved/rotaract-clubs',
+   offers:'Clubes de servicio y liderazgo para jóvenes de Rotary: proyectos comunitarios, red de contactos y formación en liderazgo.',
+   req:'Edad y costo por verificar en el portal oficial', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:4, scope:'Internacional'},
+  {id:74, title:'AIESEC Ecuador — voluntariado e intercambio', org:'AIESEC', orgName:'AIESEC Ecuador', areas:['voluntariado'], sub:'Voluntariado internacional', real:true, officialLabel:'Intercambio · AIESEC',
+   url:'https://aiesec.org.ec',
+   offers:'Charlas de oportunidades, voluntariado e intercambio con AIESEC, la red juvenil internacional presente en Ecuador.',
+   req:'Edad y costo por verificar en el portal oficial · Revisa las oportunidades vigentes y sus condiciones antes de postular', ageMin:null, ageMax:null, ageNote:'Por verificar', ageVerify:true, minor:false, mode:'Por verificar', lang:'Español', cost:'Por verificar', cert:false, close:null, state:'Por verificar', step:4, scope:'Ecuador'}
+
 ];
 
 var PREPARA = {
@@ -1486,6 +1633,28 @@ var PREPARA = {
   'voluntariado':[['Jóvenes en Acción como primera experiencia','La pasantía pagada en instituciones públicas también suma experiencia y contactos para tu ruta.','Ministerio de Trabajo y Desarrollo Humano','https://jovenesenaccion.trabajo.gob.ec'],['Globo Común: voluntariado e intercambio','Revisa en el portal SIAU las convocatorias internacionales vigentes y sus bases antes de postular.','MINEDEC · Portal SIAU de becas','https://siau.senescyt.gob.ec/convocatorias']]
 };
 
+
+/* Prepárate de Inicio: recursos gratuitos de habilidades básicas del mapeo de la Fundación
+   (Merari, 3-nov-2026). Certificado/insignia y apto 15–17 tal como consta en ese documento.
+   No se repiten los recursos que ya viven como fichas de oportunidad (Microsoft Learn, Cisco
+   Skills for All, GuayasTec, Capacítate para el Empleo, Elements of AI, Claude 101, OpenAI
+   Academy, Mujer Digital Programación Básica y HubSpot Academy). */
+var PREPARATE_HOME = [
+  {skill:'Inglés', name:'OM Personal English', desc:'14 cursos de inglés de A1 a C2, con explicaciones en español y audios de nativos.', cert:'Sin certificado por ahora', apto:'Sí', url:'https://ompersonal.com.ar'},
+  {skill:'Inglés', name:'USA Learns', desc:'Inglés americano, del gobierno de Estados Unidos.', cert:'Sin certificado mencionado en la página oficial; cursos gratuitos de inglés', apto:'Por verificar', url:'https://usalearns.org'},
+  {skill:'Inglés', name:'LearnEnglish Teens · British Council', desc:'Inglés pensado para adolescentes, del British Council.', cert:'Sin certificado', apto:'Sí', url:'https://learnenglishteens.britishcouncil.org'},
+  {skill:'Inglés', name:'BBC Learning English', desc:'Pronunciación, gramática, noticias e inglés de negocios.', cert:'Sin certificado', apto:'Sí', url:'https://bbc.co.uk/learningenglish'},
+  {skill:'Inglés', name:'EF SET', desc:'Test de nivel de inglés para tu hoja de vida.', cert:'Certificado gratis', apto:'Por verificar', url:'https://efset.org'},
+  {skill:'Inglés', name:'Duolingo', desc:'Práctica diaria de idiomas desde el celular.', cert:'Sin certificado', apto:'Sí', url:'https://duolingo.com'},
+  {skill:'Otros idiomas', name:'TV5MONDE · francés', desc:'Francés de principiante a avanzado, con prueba de nivel.', cert:'Certificado no oficial', apto:'Sí', url:'https://apprendre.tv5monde.com'},
+  {skill:'Otros idiomas', name:'DW Learn German · alemán', desc:'Cursos estructurados de alemán, como Nicos Weg.', cert:'Sin certificado mencionado en la página oficial; cursos gratuitos de alemán. La página solo informa sobre exámenes oficiales externos de A1 a C2, no entrega certificado por sus cursos', apto:'Sí', url:'https://learngerman.dw.com'},
+  {skill:'Herramientas digitales', name:'El Tío Tech', desc:'Excel de básico a avanzado, Word, PowerPoint y Power BI.', cert:'Sin certificado por ahora', apto:'Sí', url:'https://eltiotech.com'},
+  {skill:'Herramientas digitales', name:'GCFGlobal', desc:'Excel y herramientas digitales desde cero, en español.', cert:'Sin certificado mencionado en la página oficial obtenida; lecciones gratuitas', apto:'Sí', url:'https://edu.gcfglobal.org/es'},
+  {skill:'Cursos variados', name:'OpenLearn · The Open University', desc:'Más de 900 cursos, la mayoría en inglés, con constancia en los cursos con insignia.', cert:'Constancia con insignia', apto:'Sí', url:'https://open.edu/openlearn'},
+  {skill:'Mecanografía', name:'Mecanografía', desc:'Habilidad por mapear: la Fundación todavía no carga un recurso verificado para esta habilidad.', cert:'Por mapear', apto:'Por mapear', url:null},
+  {skill:'Redacción y ortografía', name:'Redacción y ortografía', desc:'Habilidad por mapear: la Fundación todavía no carga un recurso verificado para esta habilidad.', cert:'Por mapear', apto:'Por mapear', url:null},
+  {skill:'Finanzas personales', name:'Finanzas personales', desc:'Habilidad por mapear: la Fundación todavía no carga un recurso verificado para esta habilidad.', cert:'Por mapear', apto:'Por mapear', url:null}
+];
 
 var STEPS = [
   {n:1, title:'Cursos y oficios con certificado', desc:'Habilidades cortas y gratuitas que suman a tu hoja de vida desde ya.', link:'#/explorar?step=1'},
@@ -1512,7 +1681,9 @@ var MODS = [
 
 /* ================= Estado (solo en memoria, esta página no guarda datos) ================= */
 var saved = {}; /* id -> true */
-var filters = {search:'', area:'', offer:'', mode:'', cost:'', state:'', step:'', minor:false, free:false, savedOnly:false};
+var filters = {search:'', area:'', offer:'', mode:'', cost:'', state:'', step:'', minor:false, free:false, verify:false, savedOnly:false};
+/* Fichas cuyo certificado no está totalmente confirmado: se muestran solo con el filtro «Por verificar». */
+var VERIFY_IDS = {47:true, 21:true, 22:true, 54:true, 49:true, 53:true, 55:true, 46:true};
 var areaState = {sub:'', block:'oportunidades'};
 
 /* ================= Utilidades ================= */
@@ -1644,6 +1815,17 @@ $('textSizeBtn').addEventListener('click', function(){
   toast(big ? 'Texto más grande activado.' : 'Texto normal.');
 });
 
+/* ================= Prepárate (Inicio) ================= */
+function renderPreparateHome(){
+  var el = $('preparateGrid'); if(!el) return;
+  el.innerHTML = PREPARATE_HOME.map(function(r){
+    if(!r.url){
+      return '<div class="res prep-card prep-map"><span class="skill">'+esc(r.skill)+'</span><h3>'+esc(r.name)+'</h3><p>'+esc(r.desc)+'</p><div class="prep-tags"><span class="chip">Por mapear</span></div></div>';
+    }
+    return '<div class="res prep-card"><span class="skill">'+esc(r.skill)+'</span><h3>'+esc(r.name)+'</h3><p>'+esc(r.desc)+'</p><div class="prep-tags"><span class="chip">Certificado: '+esc(r.cert)+'</span><span class="chip">Apto 15–17: '+esc(r.apto)+'</span></div><div class="prep-actions"><a class="btn btn-ghost" href="'+esc(r.url)+'" target="_blank" rel="noopener" style="padding:10px 14px;font-size:.88rem">Abrir recurso oficial '+ic('arrow',15)+'</a></div></div>';
+  }).join('');
+}
+
 /* ================= Inicio ================= */
 function buildHome(){
   /* Las 6 paradas del camino son HTML estático (ver #trailStops):
@@ -1651,6 +1833,7 @@ function buildHome(){
      El acceso de menores vive como botón pequeño en el KM 0 (.minor-pill),
      que enlaza a #/explorar?minor=1 y activa el mismo filtro de siempre. */
   renderSteps($('stepsPreview'), false);
+  renderPreparateHome();
 }
 var STEP_ICONS = {1:'award', 2:'grad', 3:'money', 4:'globe'};
 function renderSteps(el, full){
@@ -1699,6 +1882,10 @@ function buildArea(areaId){
 function renderAreaBlock(a){
   var box = $('areaBlock'); if(!box) return;
   if(areaState.block==='oportunidades'){
+    if(a.id==='mi-ser'){
+      box.innerHTML = '<div class="empty"><h3>Por mapear</h3><p>El área Mi Ser todavía no tiene oportunidades mapeadas: aquí no se publica ninguna oportunidad sin verificar. Primero el SER: esta parada se trabaja en sesión con tu facilitador y con los recursos de la pestaña «Prepárate» de esta misma área.</p></div>';
+      return;
+    }
     var list = OPPS.filter(function(o){ return o.areas.indexOf(a.id)>-1; });
     if(areaState.sub) list = list.filter(function(o){ return o.sub===areaState.sub; });
     list = sorted(list);
@@ -1731,6 +1918,7 @@ function syncFilterUI(){
   $('fMode').value = filters.mode; $('fCost').value = filters.cost; $('fState').value = filters.state; $('fStep').value = filters.step;
   $('tglMinor').setAttribute('aria-pressed', filters.minor?'true':'false');
   $('tglFree').setAttribute('aria-pressed', filters.free?'true':'false');
+  $('tglVerify').setAttribute('aria-pressed', filters.verify?'true':'false');
   $('tglSaved').setAttribute('aria-pressed', filters.savedOnly?'true':'false');
 }
 function readFilters(){
@@ -1747,6 +1935,7 @@ function applyFilters(){
     if(filters.mode && o.mode!==filters.mode) return false;
     if(filters.cost && o.cost!==filters.cost) return false;
     if(filters.free && o.cost!=='Gratis') return false;
+    if(filters.verify && !VERIFY_IDS[o.id]) return false;
     if(filters.state && o.state!==filters.state) return false;
     if(filters.step && String(o.step)!==filters.step) return false;
     if(filters.minor && !o.minor) return false;
@@ -1767,12 +1956,13 @@ function applyFilters(){
   if(filters.cost) active.push(filters.cost.toLowerCase());
   if(filters.minor) active.push('aptas para menores');
   if(filters.free) active.push('gratis');
+  if(filters.verify) active.push('por verificar');
   if(filters.savedOnly) active.push('mi lista');
   $('resultsLine').innerHTML = '<b>'+list.length+'</b> resultado'+(list.length===1?'':'s')+(active.length? ' · Filtros activos: '+esc(active.join(' + ')) : ' · Sin filtros: se muestra todo')+(active.length||filters.search||filters.state||filters.step ? ' · <button type="button" id="rlClear">Borrar filtros</button>' : '');
   var c = $('rlClear'); if(c) c.addEventListener('click', clearFilters);
 }
 function clearFilters(){
-  filters = {search:'', area:'', offer:'', mode:'', cost:'', state:'', step:'', minor:false, free:false, savedOnly:false};
+  filters = {search:'', area:'', offer:'', mode:'', cost:'', state:'', step:'', minor:false, free:false, verify:false, savedOnly:false};
   syncFilterUI(); applyFilters();
 }
 ['fSearch','fArea','fOffer','fMode','fCost','fState','fStep'].forEach(function(id){
@@ -1780,6 +1970,7 @@ function clearFilters(){
 });
 $('tglMinor').addEventListener('click', function(){ filters.minor=!filters.minor; this.setAttribute('aria-pressed', filters.minor); applyFilters(); });
 $('tglFree').addEventListener('click', function(){ filters.free=!filters.free; this.setAttribute('aria-pressed', filters.free); if(filters.free){ $('fCost').value=''; } applyFilters(); });
+$('tglVerify').addEventListener('click', function(){ filters.verify=!filters.verify; this.setAttribute('aria-pressed', filters.verify); applyFilters(); });
 $('tglSaved').addEventListener('click', function(){ filters.savedOnly=!filters.savedOnly; this.setAttribute('aria-pressed', filters.savedOnly); applyFilters(); });
 $('clearFilters').addEventListener('click', clearFilters);
 $('filterForm').addEventListener('submit', function(e){ e.preventDefault(); });
